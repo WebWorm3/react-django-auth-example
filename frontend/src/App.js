@@ -1,25 +1,22 @@
 import React, { Component } from 'react';
-import Cookies from 'universal-cookie';
 import Login from './components/login';
 import Home from './components/home';
 
-const cookies = new Cookies();
-
 class App extends Component {
   state = {
-    cookie_user: cookies.get('user'),
+    cashed_user: localStorage.getItem('user'),
   }
   setAuth = () => {
-    this.setState({cookie_user: cookies.get('user')});
+    this.setState({cashed_user: localStorage.getItem('user')});
   }
   LogOut = () => {
-    cookies.remove('user');
-    this.setState({cookie_user: ''});
+    localStorage.removeItem('user');
+    this.setState({cashed_user: ''});
   }
   render() {
     return (
       <div className="container">
-        {this.state.cookie_user ? (<Home cookie_user={this.state.cookie_user} LogOut={this.LogOut}/>) : (<Login setAuth={this.setAuth}/>)}
+        {this.state.cashed_user ? (<Home cashed_user={this.state.cashed_user} LogOut={this.LogOut}/>) : (<Login setAuth={this.setAuth}/>)}
       </div>
     );
   }

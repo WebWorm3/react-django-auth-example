@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import Cookies from 'universal-cookie';
-
-const cookies = new Cookies();
 
 export default class Login extends Component {
   state = {
@@ -30,9 +27,9 @@ export default class Login extends Component {
           }
           else{
             console.log('auth');
-            cookies.set('user', json.username);
+            localStorage.setItem('user', json.username);
             this.props.setAuth();
-            console.log(cookies.get('user'));
+            console.log(localStorage.getItem('user'));
           }
         });
         this.setState({login: '', password: ''});
