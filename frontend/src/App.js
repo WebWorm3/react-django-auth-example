@@ -4,19 +4,19 @@ import Home from './components/home';
 
 class App extends Component {
   state = {
-    cashed_user: localStorage.getItem('user'),
+    cashe: JSON.parse(localStorage.getItem('auth')),
   }
   setAuth = () => {
-    this.setState({cashed_user: localStorage.getItem('user')});
+    this.setState({cashe: JSON.parse(localStorage.getItem('auth'))});
   }
   LogOut = () => {
-    localStorage.removeItem('user');
-    this.setState({cashed_user: ''});
+    localStorage.removeItem('auth');
+    this.setState({cashe: ''});
   }
   render() {
     return (
       <div className="container">
-        {this.state.cashed_user ? (<Home cashed_user={this.state.cashed_user} LogOut={this.LogOut}/>) : (<Login setAuth={this.setAuth}/>)}
+        {this.state.cashe ? (<Home cashe={this.state.cashe} LogOut={this.LogOut}/>) : (<Login setAuth={this.setAuth}/>)}
       </div>
     );
   }
