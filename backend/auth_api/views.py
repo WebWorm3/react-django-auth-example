@@ -10,8 +10,8 @@ import json, jwt, random, string, datetime, calendar
 @csrf_exempt
 def auth_view(request):
 
-    def random_char(y):
-       return ''.join(random.choice(string.ascii_letters) for x in range(y))
+    # def random_char(y):
+    #    return ''.join(random.choice(string.ascii_letters) for x in range(y))
 
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
@@ -20,11 +20,10 @@ def auth_view(request):
     if user is not None:
         if user.is_active:
             this_user = User.objects.get(username = body['login'])
-            random_word = random_char(8)
+            # random_word = random_char(8)
             future = datetime.datetime.utcnow()
             payload = {
                 'user_id': this_user.pk,
-                'random':  random_word,
                 'exp': future
             }
             token = jwt.encode(payload, 'secret', algorithm='HS256').decode('utf-8')
