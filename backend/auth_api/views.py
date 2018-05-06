@@ -3,10 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-import json
-import jwt
-import random
-import string
+import json, jwt, random, string, datetime, calendar
 
 
 
@@ -23,8 +20,14 @@ def auth_view(request):
     if user is not None:
         if user.is_active:
             this_user = User.objects.get(username = body['login'])
-            secret_word = random_char(5)
-            token = jwt.encode({'user_id': this_user.pk}, secret_word, algorithm='HS256').decode('utf-8')
+            random_word = random_char(8)
+            future = datetime.datetime.utcnow()
+            payload = {
+                'user_id': this_user.pk,
+                'random':  random_word,
+                'exp': future
+            }
+            token = jwt.encode(payload, 'secret', algorithm='HS256').decode('utf-8')
             result = {'username': this_user.username, 'token': token}
             return JsonResponse(result, safe=False)
         else:
@@ -41,4 +44,3 @@ def auth_view(request):
 #
 #     token = body['token']
 #     user = body['user']
-#     default_token_generator.check_token(user, token)
