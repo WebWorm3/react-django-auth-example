@@ -17,7 +17,7 @@ export default class Home extends Component{
           headers: {'Content-Type': 'application/json'}
           }).then(res => res.json()).then(json => {
             if (json.error){
-              console.log('error');
+              console.log('Error: ' + json.error);
               this.props.LogOut();
             }
             else{

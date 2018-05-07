@@ -56,6 +56,11 @@ def get_user_data(request):
         return JsonResponse(response, safe=False)
     except jwt.ExpiredSignatureError:
         response = {
-            'error': 'Token is invalid!',
+            'error': 'token is expired!',
+        }
+        return JsonResponse(response, safe=False)
+    except jwt.exceptions.DecodeError:
+        response = {
+            'error': 'token is invalid!'
         }
         return JsonResponse(response, safe=False)
