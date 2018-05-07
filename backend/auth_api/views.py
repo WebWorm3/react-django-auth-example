@@ -21,25 +21,41 @@ def auth_view(request):
         if user.is_active:
             this_user = User.objects.get(username = body['login'])
             # random_word = random_char(8)
-            future = datetime.datetime.utcnow()
+            future = datetime.datetime.utcnow() + datetime.timedelta(minutes=1)
             payload = {
                 'user_id': this_user.pk,
-                'exp': future
+                'exp': calendar.timegm(future.timetuple())
             }
             token = jwt.encode(payload, 'secret', algorithm='HS256').decode('utf-8')
-            result = {'username': this_user.username, 'token': token}
-            return JsonResponse(result, safe=False)
+            response = {'token': token}
+            return JsonResponse(response, safe=False)
         else:
-            result = {'error': 'user is not active'}
-            return JsonResponse(result, safe=False)
+            response = {'error': 'user is not active'}
+            return JsonResponse(response, safe=False)
     else:
-        result = {'error': 'user is not found'}
-        return JsonResponse(result, safe=False)
+        response = {'error': 'user is not found'}
+        return JsonResponse(response, safe=False)
 
-# @csrf_exempt
-# def get_user_data(request):
-#     body_unicode = request.body.decode('utf-8')
-#     body = json.loads(body_unicode)
-#
-#     token = body['token']
-#     user = body['user']
+@csrf_exempt
+def get_user_data(request):
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+
+    token = body['token']
+
+    try:
+        jwt_data = jwt.decode(token, 'secret', algorithms=['HS256'])
+        print(jwt_data)
+        user_data = User.objects.get(pk = jwt_data['user_id'])
+        response = {
+            'email': user_data.email,
+            'username': user_data.username,
+            'first_name': user_data.first_name,
+            'last_name': user_data.last_name,
+        }
+        return JsonResponse(response, safe=False)
+    except jwt.ExpiredSignatureError:
+        response = {
+            'error': 'Token is invalid!',
+        }
+        return JsonResponse(response, safe=False)
