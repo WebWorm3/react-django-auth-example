@@ -35,7 +35,7 @@ export default class Login extends Component {
 
   render(){
     return(
-      <div className="row">
+      <div className="row animated fadeIn">
         <div className="col-lg-6 offset-lg-3 card">
           <label>Login:</label>
           <input type="text" className="form-control" value={this.state.login} onChange={this.handleChangeLogin}/>

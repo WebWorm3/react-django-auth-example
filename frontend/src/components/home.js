@@ -33,7 +33,7 @@ export default class Home extends Component{
     }
     render(){
       return(
-        <div className="center">
+        <div className="center animated fadeIn">
           <h3>Logged as {this.state.username}</h3>
           <h4>{this.state.email}</h4>
           <h4>{this.state.first_name} {this.state.last_name}</h4>

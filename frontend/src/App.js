@@ -16,7 +16,7 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        {this.state.token ? (<Home token={this.state.token} LogOut={this.LogOut}/>) : (<Login setAuth={this.setAuth}/>)}
+        {this.state.token ? (<Home LogOut={this.LogOut}/>) : (<Login setAuth={this.setAuth}/>)}
       </div>
     );
   }
