@@ -21,12 +21,11 @@ export default class Login extends Component {
         body: JSON.stringify(body),
         headers: {'Content-Type': 'application/json'}
         }).then(res => res.json()).then(json => {
-          console.log(json);
           if (json.error){
             console.log('error');
           }
           else{
-            console.log('auth');
+            console.log('Authentication!');
             localStorage.setItem('token', json.token);
             this.props.setAuth();
           }

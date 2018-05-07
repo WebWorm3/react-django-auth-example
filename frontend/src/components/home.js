@@ -11,19 +11,17 @@ export default class Home extends Component{
       const body = {
         token : localStorage.getItem('token'),
       }
-      console.log(body.token);
       fetch('/user_data/', {
           method: 'POST',
           body: JSON.stringify(body),
           headers: {'Content-Type': 'application/json'}
           }).then(res => res.json()).then(json => {
-            console.log(json);
             if (json.error){
               console.log('error');
               this.props.LogOut();
             }
             else{
-              console.log('success');
+              console.log('User data is loaded!');
               this.setState({
                 email: json.email,
                 username: json.username,
