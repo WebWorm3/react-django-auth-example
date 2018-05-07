@@ -21,7 +21,7 @@ def auth_view(request):
         if user.is_active:
             this_user = User.objects.get(username = body['login'])
             # random_word = random_char(8)
-            future = datetime.datetime.utcnow() + datetime.timedelta(minutes=1)
+            future = datetime.datetime.utcnow() + datetime.timedelta(days=1)
             payload = {
                 'user_id': this_user.pk,
                 'exp': calendar.timegm(future.timetuple())
