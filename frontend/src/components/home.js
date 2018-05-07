@@ -9,8 +9,9 @@ export default class Home extends Component{
     }
     componentDidMount(){
       const body = {
-        token : JSON.parse(localStorage.getItem('auth')).token,
+        token : localStorage.getItem('token'),
       }
+      console.log(body.token);
       fetch('/user_data/', {
           method: 'POST',
           body: JSON.stringify(body),

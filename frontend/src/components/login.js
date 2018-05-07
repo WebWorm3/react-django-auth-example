@@ -27,7 +27,7 @@ export default class Login extends Component {
           }
           else{
             console.log('auth');
-            localStorage.setItem('auth', JSON.stringify(json));
+            localStorage.setItem('token', json.token);
             this.props.setAuth();
           }
         });
