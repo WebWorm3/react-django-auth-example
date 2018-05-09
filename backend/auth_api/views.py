@@ -30,10 +30,10 @@ def auth_view(request):
             response = {'token': token}
             return JsonResponse(response, safe=False)
         else:
-            response = {'error': 'user is not active'}
+            response = {'error': 'User is not active!'}
             return JsonResponse(response, safe=False)
     else:
-        response = {'error': 'user is not found'}
+        response = {'error': 'Invalid data!'}
         return JsonResponse(response, safe=False)
 
 @csrf_exempt
